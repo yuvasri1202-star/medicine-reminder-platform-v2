@@ -1,0 +1,96 @@
+c<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediCare | Medicine Reminder Platform</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-icon">✚</span><div><strong>MediCare</strong><small>Medicine Companion</small></div></div>
+    <nav>
+      <button class="nav-item active" data-view="dashboard">▦ <span>Dashboard</span></button>
+      <button class="nav-item" data-view="medicines">▤ <span>My Medicines</span></button>
+      <button class="nav-item" data-view="schedule">◷ <span>Dose Schedule</span></button>
+      <button class="nav-item" data-view="reports">▥ <span>Adherence Report</span></button>
+      <button class="nav-item" data-view="caregiver">♡ <span>Caregiver & Alerts</span></button>
+    </nav>
+    <div class="sidebar-note"><span>✦</span><p>Small reminders can help build healthier routines.</p></div>
+    <div class="profile"><div class="avatar">U</div><div><strong>My Account</strong><small>Personal dashboard</small></div></div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div><p class="eyebrow">YOUR HEALTH, ORGANIZED</p><h1 id="pageTitle">Good day! 👋</h1><p class="sub" id="pageSubtitle">Here is your medicine overview for today.</p></div>
+      <div class="top-actions"><span class="date-chip" id="todayDate"></span><button class="primary" id="addTop">＋ Add medicine</button></div>
+    </header>
+
+    <section class="view active" id="dashboard">
+      <div class="welcome-card"><div><span class="pill">DAILY OVERVIEW</span><h2>Stay on track with your medicines.</h2><p>Keep your doses, stock, and refill dates in one simple place.</p><button class="light-btn" id="viewSchedule">View today's schedule →</button></div><div class="welcome-art">✚<span>♥</span><i>✓</i></div></div>
+      <div class="stats-grid">
+        <article class="stat-card"><div class="stat-icon blue">◷</div><p>Today's doses</p><strong id="statDoses">0</strong><small>Scheduled for today</small></article>
+        <article class="stat-card"><div class="stat-icon green">✓</div><p>Doses taken</p><strong id="statTaken">0</strong><small>Marked as taken today</small></article>
+        <article class="stat-card"><div class="stat-icon orange">▣</div><p>Low-stock medicines</p><strong id="statLow">0</strong><small>Need a stock check</small></article>
+        <article class="stat-card"><div class="stat-icon purple">％</div><p>Adherence score</p><strong id="statScore">—</strong><small>Based on recorded doses</small></article>
+      </div>
+      <div class="content-grid">
+        <section class="panel"><div class="panel-heading"><div><h3>Today's schedule</h3><p>Your upcoming and recorded doses</p></div><button class="text-btn" data-goto="schedule">View all →</button></div><div id="todayList" class="dose-list"></div></section>
+        <section class="panel"><div class="panel-heading"><div><h3>Refill prediction</h3><p>Estimated stock remaining</p></div><span class="soft-tag">SMART TRACKING</span></div><div id="refillList" class="refill-list"></div></section>
+      </div>
+      <section class="panel feature-panel"><div class="panel-heading"><div><h3>Smart support</h3><p>Tools that help you stay organized</p></div></div><div class="feature-grid">
+        <div class="feature"><span class="feature-icon purple">↗</span><div><strong>Smart escalation</strong><p>Track unacknowledged doses and show when caregiver follow-up is needed.</p></div></div>
+        <div class="feature"><span class="feature-icon blue">◷</span><div><strong>Adaptive schedule</strong><p>Edit your schedule when your routine changes, following your prescription.</p></div></div>
+        <div class="feature"><span class="feature-icon orange">▣</span><div><strong>Refill prediction</strong><p>Estimate when stock may run out based on your entered usage.</p></div></div>
+        <div class="feature"><span class="feature-icon green">％</span><div><strong>Adherence score</strong><p>Review taken, missed, and late doses in your records.</p></div></div>
+      </div></section>
+    </section>
+
+    <section class="view" id="medicines">
+      <div class="section-intro"><div><h2>My medicines</h2><p>Add and manage your medicine details and available stock.</p></div><button class="primary" id="addMedicineBtn">＋ Add medicine</button></div>
+      <div class="panel"><div id="medicineTable"></div></div>
+    </section>
+
+    <section class="view" id="schedule">
+      <div class="section-intro"><div><h2>Dose schedule</h2><p>Mark doses as taken, late, or missed to keep your history accurate.</p></div><button class="outline-btn" id="enableNotifications">Enable browser notifications</button></div>
+      <div class="notice">Demo note: browser notifications work only when supported and permission is granted. This prototype does not run a reliable server scheduler when the browser is fully closed.</div>
+      <div class="panel"><div id="scheduleList"></div></div>
+    </section>
+
+    <section class="view" id="reports">
+      <div class="section-intro"><div><h2>Adherence report</h2><p>A summary based on the dose records you enter in this prototype.</p></div></div>
+      <div class="stats-grid report-stats"><article class="stat-card"><p>Recorded doses</p><strong id="reportTotal">0</strong></article><article class="stat-card"><p>Taken on time</p><strong id="reportTaken">0</strong></article><article class="stat-card"><p>Missed doses</p><strong id="reportMissed">0</strong></article><article class="stat-card"><p>Adherence score</p><strong id="reportScore">—</strong></article></div>
+      <div class="panel"><div class="panel-heading"><div><h3>Dose history</h3><p>Most recent activity</p></div></div><div id="historyList"></div></div>
+    </section>
+
+    <section class="view" id="caregiver">
+      <div class="section-intro"><div><h2>Caregiver & alerts</h2><p>Set a contact for follow-up alerts when doses are repeatedly missed.</p></div></div>
+      <div class="content-grid">
+        <div class="panel"><h3>Caregiver details</h3><p class="sub">Add a trusted contact for your prototype.</p><form id="caregiverForm" class="form-stack"><label>Caregiver name<input id="careName" placeholder="e.g. Family member"></label><label>Email address<input id="careEmail" type="email" placeholder="name@example.com"></label><label>Phone number<input id="carePhone" type="tel" placeholder="Optional phone number"></label><button class="primary" type="submit">Save caregiver</button></form><p class="hint">This demo stores details in this browser only. It does not send real email or SMS.</p></div>
+        <div class="panel"><h3>Alert settings</h3><div class="setting-row"><div><strong>Smart escalation</strong><p>Show a follow-up warning after repeated missed doses.</p></div><label class="switch"><input id="escalationToggle" type="checkbox" checked><span></span></label></div><div class="setting-row"><div><strong>Refill reminders</strong><p>Highlight medicines with low stock.</p></div><label class="switch"><input id="refillToggle" type="checkbox" checked><span></span></label></div><div id="caregiverStatus" class="status-box">No caregiver configured yet.</div></div>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="medicineDialog">
+    <form id="medicineForm" method="dialog">
+      <div class="dialog-head"><div><h2 id="dialogTitle">Add medicine</h2><p>Enter details from your prescription.</p></div><button type="button" class="close-btn" id="closeDialog">×</button></div>
+      <input type="hidden" id="medicineId">
+      <div class="form-grid">
+        <label>Medicine name *<input id="medName" required placeholder="e.g. Vitamin D"></label>
+        <label>Prescribed dosage<input id="medDosage" placeholder="e.g. 1 tablet"></label>
+        <label>Time *<input id="medTime" type="time" required value="09:00"></label>
+        <label>Frequency<select id="medFrequency"><option value="Once daily">Once daily</option><option value="Twice daily">Twice daily</option><option value="Three times daily">Three times daily</option><option value="As prescribed">As prescribed</option></select></label>
+        <label>Current stock (units) *<input id="medStock" type="number" min="0" required value="30"></label>
+        <label>Units used per day<input id="medDailyUse" type="number" min="0.1" step="0.1" value="1" required></label>
+        <label>Low-stock threshold<input id="medThreshold" type="number" min="0" value="5"></label>
+        <label>Start date<input id="medStart" type="date"></label>
+      </div>
+      <p class="hint">This is an organizer, not medical advice. Enter the schedule prescribed by your healthcare professional.</p>
+      <div class="dialog-actions"><button type="button" class="outline-btn" id="cancelDialog">Cancel</button><button class="primary" type="submit">Save medicine</button></div>
+    </form>
+  </dialog>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
